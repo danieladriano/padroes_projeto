@@ -6,7 +6,18 @@ from commands.stereo_on_with_cd_command import StereoOnWithCdCommand
 from remote_control import RemoteControl
 
 
-def main():
+class Application():
+    def __init__(self, remote_control: RemoteControl):
+        self._remote_control = remote_control
+
+    def use_remote_control_on(self, slot):
+        self._remote_control.on_button_was_pushed(slot)
+    
+    def use_remote_control_off(self, slot):
+        self._remote_control.off_button_was_pushed(slot)
+
+
+def create_remote_control():
     remote_control = RemoteControl()
 
     living_room_light = Light("Living Room")
@@ -20,10 +31,12 @@ def main():
     remote_control.set_command(0, living_room_light_on, living_room_light_off)
     remote_control.set_command(1, stereo_on_with_cd, None)
 
-    remote_control.on_button_was_pushed(0)
-    remote_control.off_button_was_pushed(0)
+    return remote_control
 
-    remote_control.on_button_was_pushed(1)
+def main():
+    app = Application(create_remote_control())
+    app.use_remote_control_on(0)
+    app.use_remote_control_on(1)
 
 if __name__ == "__main__":
     main()
