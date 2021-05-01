@@ -1,3 +1,5 @@
 *.pyc
 *.json
 *.class
+*.pdf
+*.png
